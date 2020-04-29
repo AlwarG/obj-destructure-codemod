@@ -32,7 +32,7 @@ let {
   } = obj1;
 let {
     prop: property
-  } = obj1;
+  } = obj2;
 ```
 <!--TRANSFORMS_END-->
 

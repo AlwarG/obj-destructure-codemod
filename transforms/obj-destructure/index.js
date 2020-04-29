@@ -29,24 +29,14 @@ module.exports = function transformer(file, api) {
     .filter((p) => p.value && isObjPropRead(p.value))
     .forEach((instance) => {
       objName = '';
-      const variableName = instance.get('id').node.name;
-      const propName = instance.get('init').node.property.name;
+      const readablePropName = instance.get('id').node.name;
+      const neededPropName = instance.get('init').node.property.name;
       j(instance).replaceWith(
         j.variableDeclarator(
-          j.objectPattern([j.property('init', j.identifier(propName), j.identifier(variableName))]),
+          j.identifier(readablePropName === neededPropName ? `{ ${readablePropName} }` : `{ ${neededPropName}: ${readablePropName} }`),
           j.identifier(objConstruction(instance.value.init))
         )
       );
-    });
-  root
-    .find(j.VariableDeclarator)
-    .filter((p) => p.value && p.value.id && p.value.id.type === 'ObjectPattern')
-    .forEach((path) => {
-      path.value.id.properties.forEach((prop) => {
-        if (prop.value.type === 'Identifier') {
-          prop.shorthand = prop.key.name === prop.value.name;
-        }
-      });
     });
 
   return root.toSource();

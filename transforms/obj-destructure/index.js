@@ -3,7 +3,7 @@ const { getParser } = require('codemod-cli').jscodeshift;
 module.exports = function transformer(file, api) {
   const j = getParser(api);
   let root = j(file.source);
-  
+
   let objName = '';
   function isObjPropRead(node) {
     return (
@@ -33,11 +33,15 @@ module.exports = function transformer(file, api) {
       const neededPropName = instance.get('init').node.property.name;
       j(instance).replaceWith(
         j.variableDeclarator(
-          j.identifier(readablePropName === neededPropName ? `{ ${readablePropName} }` : `{ ${neededPropName}: ${readablePropName} }`),
+          j.identifier(
+            readablePropName === neededPropName
+              ? `{ ${readablePropName} }`
+              : `{ ${neededPropName}: ${readablePropName} }`
+          ),
           j.identifier(objConstruction(instance.value.init))
         )
       );
     });
 
   return root.toSource();
-}
+};

@@ -37,7 +37,9 @@ module.exports = function transformer(file, api) {
       } else if (node.type === 'CallExpression') {
         return false;
       }
-      return isArgObj(node.object);
+      if (node.object) {
+        return isArgObj(node.object);
+      }
     }
 
     function isObjExp({ value, parentPath }) {
@@ -112,7 +114,6 @@ module.exports = function transformer(file, api) {
               objPropsArr.length === identifierNodes.length &&
               objPropsArr.length <= allowablePropertiesLen
             ) {
-
               let isEmptyObjAssign = false;
               let paramIndex = path.value.params.findIndex((param) => {
                 if (
@@ -142,4 +143,4 @@ module.exports = function transformer(file, api) {
     }
   }
   return root.toSource();
-}
+};

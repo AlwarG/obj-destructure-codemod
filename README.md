@@ -1,4 +1,4 @@
-# obj-destructure
+# obj-destructure-codemod
 
 
 A collection of codemod's for obj-destructure.
@@ -15,7 +15,7 @@ npx obj-destructure <TRANSFORM NAME> path/of/files/ or/some**/*glob.js
 yarn global add obj-destructure
 obj-destructure <TRANSFORM NAME> path/of/files/ or/some**/*glob.js
 ```
-
+# obj-destructure
 ## Transforms
 
 <!--TRANSFORMS_START-->
@@ -35,6 +35,33 @@ let {
   } = obj2;
 ```
 <!--TRANSFORMS_END-->
+
+# function-arg-obj-destructure
+## Transforms 
+
+```
+function getProp(obj) {
+  return obj.prop;
+}
+```
+into this 
+
+```
+function getProp({ prop }) {
+  return prop;
+}
+```
+
+
+**Note:**
+
+```
+function printProps(obj) {
+  console.log(obj.prop1, obj.prop2);
+}
+```
+The above function will not be transformed. Because we have allowable properties length as `1`.
+Incase you want to increase this length change [here](https://github.com/AlwarG/obj-destructure-codemod/blob/master/transforms/function-arg-obj-destructure/index.js#L6)
 
 ## Contributing
 

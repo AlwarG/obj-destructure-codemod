@@ -8,12 +8,12 @@ A collection of codemod's for obj-destructure.
 To run a specific codemod from this project, you would run the following:
 
 ```
-npx obj-destructure <TRANSFORM NAME> path/of/files/ or/some**/*glob.js
+npx obj-destructure-codemod <TRANSFORM NAME> path/of/files/ or/some**/*glob.js
 
 # or
 
-yarn global add obj-destructure
-obj-destructure <TRANSFORM NAME> path/of/files/ or/some**/*glob.js
+yarn global add obj-destructure-codemod
+obj-destructure-codemod <TRANSFORM NAME> path/of/files/ or/some**/*glob.js
 ```
 # obj-destructure
 ## Transforms
